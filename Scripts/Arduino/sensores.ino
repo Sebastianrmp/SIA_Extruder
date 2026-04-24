@@ -1,6 +1,8 @@
 //:::::termistor:::::::
 float ntc() {
+  //Lectura analogica termistor
   termistorRes = ((float)analogRead (termistorPin)* VoltageDividerResistor)/(1023 - (float)analogRead (termistorPin));
+  //Ecuación Steinhart-Hart
   steinhart = termistorRes / termistorNominalRes;     // (R/Ro)
   steinhart = log(steinhart);                         // ln(R/Ro)
   steinhart /= termistorBValue;                       // 1/B * ln(R/Ro)
@@ -12,20 +14,20 @@ float ntc() {
 //:::::control de temperatura:::::::
 void pid(int temp)
 {
-   // First we read the real value of temperature
+   //Primero se lee el valor real de temperatura
   temperature_read = temp;
-  //Next we calculate the error between the setpoint and the real value
+  //Luego calculamos el error entre el punto de ajuste y el valor real
   PID_error = set_temp - temperature_read;
-  //Calculate the P value
+  //Cálculo de P
   PID_p = kp * PID_error;
-  //Calculate the I value in a range on +-3
+  //Cálculo de I en un rango de +-3
   if(-3 < PID_error <3)
   {
     PID_i = PID_i + (ki * PID_error);
   }
 
-  //For derivative we need real time to calculate speed change rate
-  timePrev = Time;                            // the previous time is stored before the actual time read
+  //Para derivativo necesitamos tiempo real para calcular la taza de cambio de velocidad
+  timePrev = Time;                            // El tiempo anterior se almacena antes the previous time is stored before the actual time read
   Time = millis();                            // actual time read
   elapsedTime = (Time - timePrev) / 1000; 
   //Now we can calculate the D calue
