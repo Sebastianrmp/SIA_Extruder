@@ -28,21 +28,21 @@ void pid(int temp)
 
   //Para derivativo necesitamos tiempo real para calcular la taza de cambio de velocidad
   timePrev = Time;                            // El tiempo anterior se almacena antes de la lectura actual
-  Time = millis();                            // actual time read
+  Time = millis();                            // Lectura actual
   elapsedTime = (Time - timePrev) / 1000; 
-  //Now we can calculate the D calue
+  //Ahora podemos calcular el vaor de D
   PID_d = kd*((PID_error - previous_error)/elapsedTime);
-  //Final total PID value is the sum of P + I + D
+  //Valor total PID es la suma P + I+ D
   PID_value = PID_p + PID_i + PID_d;
 
-  //We define PWM range between 0 and 255
+  //Definimos PWM en el rango entre 0 y 255
   if(PID_value < 0)
   {    PID_value = 0;    }
   if(PID_value > 255)  
   {    PID_value = 255;  }
-  //Now we can write the PWM signal to the mosfet on digital pin D3
+  //Ahora escribimos la señal PWM al mosfet en salida digital D3
   analogWrite(PWM_pin,255-PID_value);
-  previous_error = PID_error;     //Remember to store the previous error for next loop.
+  previous_error = PID_error;     //Almacenamiento del error anterior para el siguiente loop.
 
   delay(300);
   }
