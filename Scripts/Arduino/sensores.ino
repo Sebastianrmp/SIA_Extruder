@@ -27,7 +27,7 @@ void pid(int temp)
   }
 
   //Para derivativo necesitamos tiempo real para calcular la taza de cambio de velocidad
-  timePrev = Time;                            // El tiempo anterior se almacena antes the previous time is stored before the actual time read
+  timePrev = Time;                            // El tiempo anterior se almacena antes de la lectura actual
   Time = millis();                            // actual time read
   elapsedTime = (Time - timePrev) / 1000; 
   //Now we can calculate the D calue
